@@ -1,8 +1,8 @@
 // Add imports above this line
 import { galleryItems } from './gallery-items';
-// Change code below this line
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
+// Change code below this line
 
 const imgContainer = document.querySelector(".gallery");
 const imgMarkup = createImgMarkup(galleryItems);
@@ -15,44 +15,26 @@ function createImgMarkup(gallery) {
   return gallery
     .map(({ preview, original, description }) => {
       return `
-    <div class="gallery__item">
-        <a class="gallery__link" href="${original}">
-            <img
-            class="gallery__image"
-            src="${preview}"
-            data-source="${original}"
-            alt="${description}"
-            />
-        </a>
-    </div>`;
-    })
-    .join("");
+      <li>
+      <a class="gallery__item" href="${original}"">
+          <img
+          class="gallery__image"
+          src="${preview}"
+          alt="${description}"
+          />
+      </a>
+  </li>`;
+  })
+  .join('');
 }
 
-function onImgContainerClick(event) {
-  event.preventDefault();
-  const isImgEl = event.target.classList.contains("gallery__image");
+var lightbox = new SimpleLightbox('.gallery a', {
+captionsData: 'alt',
+captionDelay: 250,
+});
 
-  if (!isImgEl) {
-    return;
-  }
-
-  const instance = basicLightbox.create(`
-    <img src='${event.target.dataset.source}' width="800" height="600">
-`);
-
-  instance.show(() => {
-    window.addEventListener("keydown", onEscKeyPress);
-  });
-
-  function onEscKeyPress(event) {
-    if (event.code === "Escape") {
-      instance.close(() => {
-        window.removeEventListener("keydown", onEscKeyPress);
-      });
-      console.log(event.code);
-    }
-  }
+function onImgContainerClick(evt) {
+evt.preventDefault();
 }
 
 console.log(galleryItems);
