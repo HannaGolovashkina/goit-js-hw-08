@@ -15,15 +15,13 @@ function createImgMarkup(gallery) {
   return gallery
     .map(({ preview, original, description }) => {
       return `
-      <li>
       <a class="gallery__item" href="${original}"">
           <img
           class="gallery__image"
           src="${preview}"
           alt="${description}"
           />
-      </a>
-  </li>`;
+      </a>`;
   })
   .join('');
 }
@@ -33,8 +31,8 @@ captionsData: 'alt',
 captionDelay: 250,
 });
 
-function onImgContainerClick(evt) {
-evt.preventDefault();
+function onImgContainerClick(event) {
+event.preventDefault();
 }
 
 console.log(galleryItems);
